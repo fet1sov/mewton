@@ -1,0 +1,98 @@
+{
+  "Main":{
+    "totalEarned": "Total Earned",
+    "balance": "Balance",
+    "catsBought": "Cats Bought"
+  },
+  "Header":{
+    "userAvatar": "User Avatar",
+    "connectWallet": "Connect Wallet"
+  },
+  "boost": {
+    "boost": "Boost",
+    "buy": "Buy",
+    "boostsInfo": "boost can be purchased again only after some time",
+    "topUp": "Top up balance"
+  },
+  "tasks": {
+    "title": "Tasks",
+    "subscribe": "Subscribe",
+    "start": "Start",
+    "to": "to"
+  },
+  "friends": {
+    "title": "Invite friends!",
+    "subtitle": "and get bonuses",
+    "inactiveFriends": "for 1 invited friend",
+    "activeFriends": "for 1 invited",
+    "active": "active",
+    "friends": "friends",
+    "invite": "Invite friends",
+    "referrals": "Your invited friends:"
+  },
+  "wallet": {
+    "title": "Wallet",
+    "totalEarned": "Total Earned",
+    "topUp": "Top up balance",
+    "connectWallet": "Connect wallet",
+    "withdraw": "Withdraw",
+    "note": "*all withdrawals are made automatically and are credited to the linked wallet immediately",
+    "note2": "**we also take a commission of 3% on the functioning of the ecosystem"
+  },
+  "info": {
+    "title": "Information",
+    "read": "Read",
+    "hide": "Hide",
+    "howToPlay": "How to play?",
+    "whatAreBoosts": "What are boosts and what they give?",
+    "bonuses": "What bonuses for friends?",
+    "withdrawals": "How quickly does withdrawal occur?",
+    "contacts": "Our contacts and resources",
+    "info1":{
+      "desc1":"Click on the cat and get free MEW",
+      "desc2":"Buy boosts and get additional TON coins",
+      "desc3":"coins"
+    },
+    "info2":{
+      "desc1":"Boosts",
+      "desc2":"boosts are enhancements for your account",
+      "desc3":"You can get: TON",
+      "desc4":"Attention!",
+      "desc5":"All enhancements are effective not more than 24 hours.",
+      "desc6":"You can buy at once several boosts of different types"
+    },
+    "info3":{
+      "desc1":"You can invite friends in the Friends section",
+      "desc2":"For each invited friend",
+      "desc3":"you get 0,001 TON",
+      "desc4":"For each active* friend",
+      "desc5":"you get 0,005 TON + 5% from each of his profits",
+      "desc6":"*active friend - this is the one who replenished the balance on the minimum amount"
+    },
+    "info4":{
+      "desc1":"Withdrawal occurs immediately.",
+      "desc2":"Exception - transaction delay in the blockchain TON"
+    },
+    "info5":{
+      "desc1":"Support",
+      "desc2":"chat-bot",
+      "desc3":"Our",
+      "desc4":"channel"
+    }
+  },
+  "navigation": {
+    "home": "Home",
+    "tasks": "Tasks",
+    "friends": "Friends",
+    "wallet": "Wallet",
+    "boost": "Boosts",
+    "info": "Info"
+  },
+  "modals": {
+    "withdraw": "Withdraw",
+    "topUp": "Top up balance",
+    "fee": "Commission",
+    "description": "Will be credited",
+    "placeholder": "Enter the amount in TON"
+  }
+}

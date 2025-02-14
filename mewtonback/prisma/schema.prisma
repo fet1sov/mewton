@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+}
+
+model User {
+  id               Int      @id @default(autoincrement())
+  telegramId       BigInt   @unique
+  username         String
+  firstName        String
+  lastName         String
+  points           Int      @default(0)
+  energy           Int      @default(1000)
+  energyReFillList Int      @default(0)
+  balance          Float    @default(0)
+  isAdmin          Boolean? @default(false)
+  catsBought       Int?     @default(0)
+  totalEarned      Float?   @default(0)
+  tgChatId         String?
+  walletAddress    String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  referralsMade    Referral[]  @relation("ReferrerRelation")
+  referralReceived Referral?   @relation("ReferredUserRelation")
+  boosts           UserBoost[]
+  tasks            UserTask[]
+}
+
+model Referral {
+  id         Int   @id @default(autoincrement())
+  referrerId Int
+  referredId Int   @unique
+  referrer   User  @relation("ReferrerRelation", fields: [referrerId], references: [id])
+  referred   User? @relation("ReferredUserRelation", fields: [referredId], references: [id])
+
+  invitedAt DateTime @default(now())
+
+  @@index([referrerId])
+  @@index([referredId])
+}
+
+model Tasks {
+  id         Int        @id @default(autoincrement())
+  cannelLink String
+  UserTask   UserTask[]
+}
+
+model Boost {
+  id          Int     @id @default(autoincrement())
+  name        String
+  imageUrl    String
+  buyPrice    Float
+  boostPrice  Float
+  isAvailable Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  UserBoost UserBoost[]
+}
+
+model UserBoost {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  boostId     Int
+  lastBuyDate DateTime?
+  isPayed     Boolean?  @default(false)
+  isPurchased Boolean?  @default(false)
+  purchasedAt DateTime
+
+  user  User  @relation(fields: [userId], references: [id])
+  boost Boost @relation(fields: [boostId], references: [id])
+
+  @@unique([userId, boostId])
+}
+
+model UserTask {
+  id     Int @id @default(autoincrement())
+  userId Int
+  taskId Int
+
+  user User  @relation(fields: [userId], references: [id])
+  task Tasks @relation(fields: [taskId], references: [id])
+
+  @@unique([userId, taskId])
+}
