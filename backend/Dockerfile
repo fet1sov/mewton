@@ -1,15 +1,34 @@
-# Docker file
-FROM node:18-alpine as builder
-RUN npm cache clean –force
+FROM node:20-alpine AS builder
 
-RUN apk add --no-cache openssl
+RUN apk add --no-cache openssl # Here
 
-WORKDIR /usr/app
-COPY ./ /usr/app
-RUN npm install
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+RUN npm install --frozen-lockfile
+
+COPY . .
+
+RUN npx prisma generate
 
 RUN npm run build
-RUN npm run db:prod
 
-# Start the serving backend part
-CMD ["npm", "run", "start:prod"]
+FROM node:20-alpine AS production
+
+RUN apk add --no-cache openssl # And here
+
+WORKDIR /usr/src/app
+
+COPY --from=builder /usr/src/app/package*.json ./
+COPY --from=builder /usr/src/app/node_modules ./node_modules
+COPY --from=builder /usr/src/app/dist ./dist
+COPY --from=builder /usr/src/app/prisma ./prisma
+COPY --from=builder /usr/src/app/tsconfig.json ./tsconfig.json
+COPY --from=builder /usr/src/app/tsconfig.build.json ./tsconfig.build.json
+
+ENV NODE_ENV=production
+
+EXPOSE 8000
+
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/main.js"]
