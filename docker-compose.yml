@@ -9,7 +9,7 @@ services:
       - './data:/var/lib/postgresql/data'
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: root
+      POSTGRES_PASSWORD: 123
       POSTGRES_DB: nest
     networks:
       - prod
