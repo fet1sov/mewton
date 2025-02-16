@@ -41,8 +41,6 @@ services:
       context: ./backend
     volumes:
       - './.env:/usr/app/.env'
-    depends_on:
-      - database
     networks:
       - prod
     restart: always
