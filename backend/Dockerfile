@@ -1,11 +1,12 @@
-# Base image
-FROM node:alpine as build
+# Docker file
+FROM node:18-alpine as builder
+RUN npm cache clean –force
 
-COPY package*.json ./
-
+WORKDIR /usr/app
+COPY ./ /usr/app
 RUN npm install
 
-COPY . .
 RUN npm run build
 
-CMD [ "node", "dist/main.js" ]
+# Start the serving backend part
+CMD ["node", "dist/main.js"]
