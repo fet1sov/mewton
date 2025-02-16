@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'ax
 import cookies from 'js-cookie';
 
 const rest = axios.create({
-  baseURL: 'http://192.168.14.53:8000',
+  baseURL: 'https://mewtonfarm.com/api',
   headers: {
     'Content-Type': 'application/json',
   },
