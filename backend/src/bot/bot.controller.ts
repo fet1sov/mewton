@@ -13,7 +13,7 @@ export class BotController {
   async startCommand(ctx: Context) {
     const payload = encodeURIComponent(JSON.stringify(ctx.message));
     const language = ctx.message.from.language_code;
-    const webAppUrl = `http://192.168.43.10:5173/`;
+    const webAppUrl = `https://mewtonfarm.com/?startapp=${payload}`;
 
     const count = await this.prisma.user.count({
       where: { telegramId: ctx.from.id }
