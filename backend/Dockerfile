@@ -26,6 +26,7 @@ COPY --from=builder /usr/src/app/dist ./dist
 COPY --from=builder /usr/src/app/prisma ./prisma
 COPY --from=builder /usr/src/app/tsconfig.json ./tsconfig.json
 COPY --from=builder /usr/src/app/tsconfig.build.json ./tsconfig.build.json
+COPY --from=builder /usr/src/app/.env ./.env
 
 ENV NODE_ENV=production
 
