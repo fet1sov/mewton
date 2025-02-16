@@ -7,6 +7,7 @@ COPY ./ /usr/app
 RUN npm install
 
 RUN npm run build
+RUN npm run db:prod
 
 # Start the serving backend part
-CMD ["node", "dist/main.js"]
+CMD ["npm", "run", "start:prod"]
