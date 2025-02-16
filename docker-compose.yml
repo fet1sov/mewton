@@ -1,9 +1,11 @@
 version: '3.8'
 services:
-  database:
+  postgres_db:
+    hostname: postgres_db
+    container_name: postgres_db
     image: postgres:15
     ports:
-      - 5432:5432
+      - '5432:5432'
     volumes:
       - './data:/var/lib/postgresql/data'
     environment:
@@ -40,7 +42,7 @@ services:
     build:
       context: ./backend
     depends_on:
-      database:
+      postgres_db:
         condition: service_started
     networks:
       - prod
