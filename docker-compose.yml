@@ -39,10 +39,9 @@ services:
   backend:
     build:
       context: ./backend
-    volumes:
-      - './.env:/usr/app/.env'
     depends_on:
-      - database
+      database:
+        condition: service_started
     networks:
       - prod
     restart: always
