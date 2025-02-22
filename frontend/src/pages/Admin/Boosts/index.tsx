@@ -5,6 +5,7 @@ import { useBoostStore } from '@/lib/store/boostStore';
 import { useUserStore } from '@/lib/store/userStore';
 import { history } from '@/lib/utils/history';
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 export const AdminBoosts = () => {
   const boosts = useBoostStore((state) => state.boosts);
@@ -30,6 +31,9 @@ export const AdminBoosts = () => {
         <div className="flex-1 mx-4 ">
           <h1 className="flex items-center gap-3 mb-10 text-3xl">Бусты</h1>
           <div className="flex flex-col gap-3">
+            <Link className="w-full text-center px-4 py-2 text-xs font-bold bg-orange rounded-xl" to={'/admin/boosts/add'}>
+              + Добавить буст
+            </Link>
             <div className="flex flex-col gap-3">
               {boosts?.map((item) => {
                 const handleCheckedChange = (value: boolean) => {

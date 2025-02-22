@@ -27,7 +27,7 @@ export const AdminTasks = () => {
     <div className="flex justify-center">
       <div className="flex flex-col w-full max-w-xl py-10 font-bold text-white">
         <div className="flex-1 mx-4 ">
-          <h1 className="flex items-center gap-3 mb-10 text-3xl">Задании</h1>
+          <h1 className="flex items-center gap-3 mb-10 text-3xl">Задания</h1>
           <div className="flex flex-col gap-3">
             <InputForm />
             <div className="flex flex-col gap-3">

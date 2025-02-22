@@ -14,6 +14,11 @@ export class BoostsController {
     return this.boostsService.buyBoost(+id, user.id);
   }
 
+  @Post('/create')
+  async createBoost(@Body() body: Boost, @GetUser() user: User) {
+    return this.boostsService.createBoost(body, user.isAdmin);
+  }
+
   @Patch('/:id')
   async updateBoost(@Param('id') id: number, @Body() body: Boost) {
     return this.boostsService.updateBoost(+id, body);

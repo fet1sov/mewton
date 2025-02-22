@@ -1,4 +1,5 @@
 import rest from '../services/rest';
+import BoostInfo from '../store/boostStore';
 
 export const getBoosts = async () => {
   const res = await rest.get('/boosts/user');
@@ -21,5 +22,10 @@ export const getAllBoosts = async () => {
 export const updateBoost = async (boostId: number, isAvailable: boolean) => {
   const res = await rest.patch(`/boosts/${boostId}`, { isAvailable });
 
+  return res.data;
+};
+
+export const createBoost = async (boostInfo: BoostInfo) => {
+  const res = await rest.post(`/boosts/create`, { ...boostInfo });
   return res.data;
 };

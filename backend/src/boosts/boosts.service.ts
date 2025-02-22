@@ -4,6 +4,7 @@ import { Boost } from '@prisma/client';
 import { InjectBot } from 'nestjs-telegraf';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Context, Telegraf } from 'telegraf';
+import BoostInfo from './dto/boosts.dto';
 
 @Injectable()
 export class BoostsService {
@@ -116,6 +117,16 @@ export class BoostsService {
       },
     });
     return boosts;
+  }
+
+  async createBoost(data: Boost, isAdmin: boolean) {
+      try {
+        if (!isAdmin) throw "Should be an admin"
+        const boost = await this.prisma.boost.create({ data });
+        return boost;
+      } catch (error) {
+        throw error;
+      }
   }
 
   async getAllBoosts() {

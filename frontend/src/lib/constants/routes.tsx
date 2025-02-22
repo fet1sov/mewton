@@ -1,3 +1,4 @@
+import { AdminAddBoosts } from '@/pages/Admin/AddBoosts';
 import { AdminBoosts } from '@/pages/Admin/Boosts';
 import { AdminTasks } from '@/pages/Admin/Tasks';
 import Boost from '@/pages/Boost';
@@ -64,6 +65,11 @@ export const routes: RouteObject[] = [
         path: '/admin/boosts',
         index: true,
         element: <AdminBoosts />,
+      },
+      {
+        path: '/admin/boosts/add',
+        index: true,
+        element: <AdminAddBoosts />,
       },
       {
         path: '/admin/tasks',
