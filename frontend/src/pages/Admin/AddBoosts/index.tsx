@@ -18,6 +18,8 @@ export const AdminAddBoosts = () => {
   function handleSubmit(event: React.FormEvent<EventTarget>) {
     event.preventDefault();
 
+    const formData = new FormData(event.target);
+
     createBoost({
       name: String(formData.get('name')),
       buyPrice: Number(formData.get('buyPrice')),
