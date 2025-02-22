@@ -4,10 +4,6 @@ import BoostInfo, { useBoostStore } from '@/lib/store/boostStore';
 import { useUserStore } from '@/lib/store/userStore';
 import { history } from '@/lib/utils/history';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-
 /* eslint-disable */
 
 export const AdminAddBoosts = () => {
