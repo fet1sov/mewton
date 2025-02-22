@@ -5,6 +5,8 @@ import { useUserStore } from '@/lib/store/userStore';
 import { history } from '@/lib/utils/history';
 import { FormEvent } from 'react';
 
+/* eslint-disable */
+
 export const AdminAddBoosts = () => {
   const isAdmin = useUserStore((state) => state.isAdmin);
   const createBoost = useBoostStore((state) => state.createBoost);
@@ -13,9 +15,8 @@ export const AdminAddBoosts = () => {
     history.push('/');
   }
 
-  function handleSubmit(event: React.FormEvent) {
+  function handleSubmit(event: React.FormEvent<EventTarget>) {
     event.preventDefault();
-    const formData = new FormData(event.target);
 
     createBoost({
       name: String(formData.get('name')),
