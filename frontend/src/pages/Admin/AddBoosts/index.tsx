@@ -3,7 +3,10 @@ import { Input } from '@/components/ui/input';
 import BoostInfo, { useBoostStore } from '@/lib/store/boostStore';
 import { useUserStore } from '@/lib/store/userStore';
 import { history } from '@/lib/utils/history';
-import { FormEvent } from 'react';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 /* eslint-disable */
 
@@ -15,10 +18,10 @@ export const AdminAddBoosts = () => {
     history.push('/');
   }
 
-  function handleSubmit(event: React.FormEvent<EventTarget>) {
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const formData = new FormData(event.target);
+    const formData = new FormData(event.currentTarget);
 
     createBoost({
       name: String(formData.get('name')),
