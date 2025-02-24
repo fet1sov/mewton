@@ -24,7 +24,7 @@ export class BoostsController {
     return this.boostsService.updateBoost(+id, body);
   }
 
-  @Get('user')
+  @Get('/user')
   async getAllUserBoosts(@GetUser() user: User) {
     return this.boostsService.getAllUserBoosts(user.id);
   }

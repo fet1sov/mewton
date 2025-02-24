@@ -130,20 +130,11 @@ export class UserService {
   @Cron(CronExpression.EVERY_12_HOURS)
   async refillEnergy() {
     try {
-      const users = await this.prisma.user.findMany({});
-
-      if (users.length > 0) {
-        for (const user of users) {
-          await this.prisma.user.update({
-            where: {
-              telegramId: user.id,
-            },
-            data: {
-              energyReFillList: user.energyReFillList + 1,
-            },
-          });
-        }
-      }
+      await this.prisma.user.updateMany({
+        data: {
+          energyReFillList: { increment: 1 },
+        },
+      });
 
       return 0;
     } catch (error) {

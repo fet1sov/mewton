@@ -114,13 +114,22 @@ export const useUserStore = create<UserInterface>((set) => ({
     const { balance } = useUserStore.getState();
     if (buyPrice > balance && name !== 'Loki') {
       history.push('/wallet');
-      return toast('Not enough balance');
+      toast('Not enough balance');
+      return;
     }
     const res = await buyBoost(boostId);
+
+    if (res.status == 500)
+    {
+      history.push('/wallet');
+      toast('Not enough balance');
+      return;
+    }
+
     const userData = await getUser();
 
     set({
-      boosts: res,
+      boosts: res.data.boosts,
       balance: userData.balance,
       points: userData.points,
       totalEarned: userData.totalEarned,

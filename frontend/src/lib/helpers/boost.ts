@@ -8,9 +8,17 @@ export const getBoosts = async () => {
 };
 
 export const buyBoost = async (boostId: number) => {
-  const res = await rest.post(`/boosts/buy/${boostId}`);
-
-  return res.data.boosts;
+  try {
+    const res = await rest.post(`/boosts/buy/${boostId}`);
+    return res;
+  } catch (error) {
+    return {
+      status: 500,
+      data: {
+        boosts: []
+      }
+    };
+  }
 };
 
 export const getAllBoosts = async () => {

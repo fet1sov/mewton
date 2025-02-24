@@ -29,7 +29,7 @@ export function Tasks() {
   }, []);
 
   const handleCompleteTask = (taskId: number, channelLink: string) => async () => {
-    tgw?.openTelegramLink(`https://t.me/@${channelLink}`);
+    tgw?.openTelegramLink(`https://t.me/${channelLink}`);
 
     await completeTask(taskId, channelLink);
   };

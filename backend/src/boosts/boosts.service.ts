@@ -123,6 +123,16 @@ export class BoostsService {
       try {
         if (!isAdmin) throw "Should be an admin"
         const boost = await this.prisma.boost.create({ data });
+        const users = await this.prisma.user.findMany();
+
+        for (let user of users) {
+          await this.prisma.userBoost.create({ data: {
+            userId: user.id,
+            boostId: boost.id,
+            purchasedAt: new Date('2023-11-12')
+          }});
+        }        
+
         return boost;
       } catch (error) {
         throw error;

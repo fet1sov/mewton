@@ -3,8 +3,7 @@ import { Input } from '@/components/ui/input';
 import BoostInfo, { useBoostStore } from '@/lib/store/boostStore';
 import { useUserStore } from '@/lib/store/userStore';
 import { history } from '@/lib/utils/history';
-
-/* eslint-disable */
+import { FormEvent } from 'react';
 
 export const AdminAddBoosts = () => {
   const isAdmin = useUserStore((state) => state.isAdmin);
@@ -14,10 +13,9 @@ export const AdminAddBoosts = () => {
     history.push('/');
   }
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-
-    const formData = new FormData(event.currentTarget);
+    const formData = new FormData(event.target);
 
     createBoost({
       name: String(formData.get('name')),
