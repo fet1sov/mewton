@@ -48,8 +48,8 @@ export default function Boost() {
             {boosts.map((item) => {
               const { boost, purchasedAt } = item;
               const isBoostAvailable =
-                (dayjs().diff(dayjs(purchasedAt), 'day') && boost.isAvailable) ||
-                boost.name === 'Loki';
+                (dayjs().diff(dayjs(purchasedAt), 'day') && boost.isAvailable) 
+                /* || boost.name === 'Loki' */;
 
               if (!item.boost.isAvailable) {
                 return null;
@@ -66,11 +66,7 @@ export default function Boost() {
                       {boost.name}
                     </span>
                     <span className="text-[10px] flex gap-1 items-center">
-                      {boost.name === 'Loki' ? (
-                        <img className="w-[12px]" src={monetaSvg} alt="" />
-                      ) : (
-                        <img className="w-[12px]" src={tonSvg} alt="" />
-                      )}
+                      <img className="w-[12px]" src={tonSvg} alt="" />
                       {boost.buyPrice}
                     </span>
                   </div>

@@ -141,4 +141,25 @@ export class UserService {
       throw error;
     }
   }
+
+  @Cron(CronExpression.EVERY_12_HOURS)
+  async paySalary() {
+    const users = await this.prisma.user.findMany();
+    try {
+      for (let user of users) {
+        await this.prisma.user.update({
+          where: {
+            id: user.id
+          },
+          data: {
+            balance: { increment: user.totalEarned },
+          },
+        });
+      }
+
+      return 0;
+    } catch (error) {
+      throw error;
+    }
+  }
 }

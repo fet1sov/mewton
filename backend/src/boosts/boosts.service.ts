@@ -24,6 +24,7 @@ export class BoostsService {
       throw new Error('Boost not found');
     }
 
+    /*
     if (boost.name === 'Loki') {
       if (user.points < boost.buyPrice) {
         throw new Error('Insufficient points');
@@ -65,6 +66,7 @@ export class BoostsService {
 
       return boosts;
     }
+    */
 
     if (user.balance < boost.buyPrice) {
       throw new Error('Insufficient balance');
