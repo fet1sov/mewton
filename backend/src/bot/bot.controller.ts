@@ -49,9 +49,11 @@ export class BotController {
         },
       });
 
+      console.log(payload);
+
       const referred = await this.prisma.user.findUnique({
         where: {
-          telegramId: Number(ctx.payload),
+          telegramId: Number(payload),
         },
       });
 
