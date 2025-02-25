@@ -61,7 +61,7 @@ export default function Boost() {
                 >
                   <div className="flex items-center justify-between w-full">
                     <span className="text-[10px] flex gap-2 items">
-                      <img className="w-[12px]" src={boost.imageUrl || convertSvg} alt="" />
+                      <img className="w-[12px]" src={convertSvg} alt="" />
                       {boost.name}
                     </span>
                     <span className="text-[10px] flex gap-1 items-center">
@@ -69,7 +69,7 @@ export default function Boost() {
                       {boost.buyPrice}
                     </span>
                   </div>
-                  <img className="w-[79px]" src={cat8} alt="" />
+                  <img className="w-[79px]" src={boost.imageUrl || cat8} alt="" />
                   <button
                     disabled={!isBoostAvailable}
                     className={clsx(
