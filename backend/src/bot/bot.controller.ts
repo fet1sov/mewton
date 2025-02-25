@@ -15,6 +15,8 @@ export class BotController {
     const language = ctx.message.from.language_code;
     const webAppUrl = `https://mewtonfarm.com/?startapp=${payload}`;
 
+    console.log(ctx);
+
     const count = await this.prisma.user.count({
       where: { telegramId: ctx.from.id }
     });
@@ -26,7 +28,40 @@ export class BotController {
         data: { tgChatId: String(ctx.chat.id) },
       });
     }
-    
+
+    const user = await this.prisma.user.findUnique({
+      where: {
+        telegramId: ctx.from.id,
+      },
+    });
+
+    if (!user) {
+      const res = await this.prisma.user.create({
+        data: {
+          telegramId: ctx.from.id,
+          username: ctx.from.username || '',
+          firstName: ctx.from.first_name || '',
+          lastName: ctx.from.last_name || '',
+          points: 0,
+          energy: 1000,
+          energyReFillList: 0,
+          balance: 0,
+        },
+      });
+
+      const referred = await this.prisma.user.findUnique({
+        where: {
+          telegramId: Number(ctx.text.split(' ')[-1]),
+        },
+      });
+
+      await this.prisma.referral.create({
+        data: {
+          referrerId: res.id,
+          referredId: referred.id
+        },
+      });
+    }
 
     if (language === 'en') {
       await ctx.replyWithPhoto(

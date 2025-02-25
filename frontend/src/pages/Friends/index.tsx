@@ -21,7 +21,7 @@ export function Friends() {
   const { t } = useTranslation();
 
   const handleInviteFriend = () => {
-    const inviteLink = `${INVITE_URL}?startapp=${telegramId}`;
+    const inviteLink = `${INVITE_URL}?start=${telegramId}`;
     const shareText = `Join me on this awesome Telegram mini app!`;
     const fullUrl = `https://t.me/share/url?url=${encodeURIComponent(
       inviteLink,
@@ -30,7 +30,7 @@ export function Friends() {
   };
 
   const handleCopyLink = () => {
-    const inviteLink = `${INVITE_URL}?startapp=${telegramId}`;
+    const inviteLink = `${INVITE_URL}?start=${telegramId}`;
     navigator.clipboard.writeText(inviteLink);
     alert('Invite link copied to clipboard!');
   };

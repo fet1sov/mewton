@@ -24,9 +24,6 @@ function App() {
         username: String(user?.username),
       });
       await syncUserData();
-
-      console.log("Start: " + startParam);
-
       if (startParam) {
         try {
           await referral(+startParam);
