@@ -16,7 +16,7 @@ export function Friends() {
   const [referrals, setReferrals] = useState<Referral[]>([] as Referral[]);
   const telegramId = useUserStore((state) => state.telegramId);
   const syncUserData = useUserStore((state) => state.syncUserData);
-  const INVITE_URL = 'https://t.me/mewtonBot/mewton/start';
+  const INVITE_URL = 'https://t.me/mewtonBot';
   const { tgw } = useTelegram();
   const { t } = useTranslation();
 
