@@ -1,6 +1,5 @@
 import cat8 from '@/assets/cat8.png';
 import convertSvg from '@/assets/convert.png';
-import monetaSvg from '@/assets/moneta.png';
 import tonSvg from '@/assets/ton.svg';
 import { BottomTabs } from '@/components/BottomTabs';
 import { TopUpBalance } from '@/components/Dialogs/top-up-balance';
