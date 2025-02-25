@@ -1,5 +1,4 @@
 import bgPng from '@/assets/bg.png';
-import catPng from '@/assets/cat.png';
 import energySvg from '@/assets/energy.png';
 import coinSvg from '@/assets/moneta.png';
 import tonSvg from '@/assets/ton.svg';
@@ -88,7 +87,7 @@ export const Main = () => {
             <div className="flex flex-col items-center justify-between gap-1 p-2 rounded-md bg-grayBg">
               <span className="text-xs text-center">{t('Main.catsBought')}</span>
               <span className="flex gap-2 text-xs">
-                <img className="w-[16px] " src={catPng} alt="" />
+                <img className="w-[16px] " src={'./boosts/cat.png'} alt="" />
                 {catsBought}
               </span>
             </div>
@@ -104,7 +103,7 @@ export const Main = () => {
                 <img className="w-[26px] h-[26px]" src={energySvg} alt="" /> {energys}/1000
               </span>
               <span className="flex items-center gap-2">
-                <img className="w-[26px] h-[26px]" src={catPng} alt="" /> {energyReFill}
+                <img className="w-[26px] h-[26px]" src={'./boosts/cat.png'} alt="" /> {energyReFill}
               </span>
             </div>
           </div>
