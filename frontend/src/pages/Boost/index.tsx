@@ -20,6 +20,10 @@ export default function Boost() {
   const handleBuyBoost = useUserStore((state) => state.handleBuyBoost);
   const { t } = useTranslation();
 
+  function loadImage(imageName: string) {
+      return new URL(`./assets/${imageName}.png`, import.meta.url).href
+  }
+
   useEffect(() => {
     (async () => {
       const res = await getBoosts();
@@ -69,7 +73,7 @@ export default function Boost() {
                       {boost.buyPrice}
                     </span>
                   </div>
-                  <img className="w-[79px]" src={"/assets/" + boost.imageUrl + ".png" || cat8} alt="" />
+                  <img className="w-[79px]" src={loadImage(boost.imageUrl) || cat8} alt="" />
                   <button
                     disabled={!isBoostAvailable}
                     className={clsx(
