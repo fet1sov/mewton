@@ -1,4 +1,3 @@
-import cat8 from '@/assets/cat8.png';
 import convertSvg from '@/assets/convert.png';
 import tonSvg from '@/assets/ton.svg';
 import { BottomTabs } from '@/components/BottomTabs';
@@ -69,7 +68,7 @@ export default function Boost() {
                       {boost.buyPrice}
                     </span>
                   </div>
-                  <img className="w-[79px]" src={`/boosts/${boost.imageUrl}.png` || cat8} alt="" />
+                  <img className="w-[79px]" src={`/boosts/${boost.imageUrl}.png` || `/assets/cat8.png`} alt="" />
                   <button
                     disabled={!isBoostAvailable}
                     className={clsx(
