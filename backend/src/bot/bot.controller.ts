@@ -15,8 +15,6 @@ export class BotController {
     const language = ctx.message.from.language_code;
     const webAppUrl = `https://mewtonfarm.com/?startapp=${payload}`;
 
-    console.log(ctx);
-
     const count = await this.prisma.user.count({
       where: { telegramId: ctx.from.id }
     });
@@ -35,6 +33,8 @@ export class BotController {
       },
     });
 
+    console.log(ctx.text.split(' ')[-1]);
+
     if (!user) {
       const res = await this.prisma.user.create({
         data: {
@@ -51,7 +51,7 @@ export class BotController {
 
       const referred = await this.prisma.user.findUnique({
         where: {
-          telegramId: Number(ctx.text.split(' ')[-1]),
+          telegramId: Number(ctx.payload),
         },
       });
 
