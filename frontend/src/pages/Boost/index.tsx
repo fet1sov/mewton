@@ -69,7 +69,7 @@ export default function Boost() {
                       {boost.buyPrice}
                     </span>
                   </div>
-                  <img className="w-[79px]" src={boost.imageUrl || cat8} alt="" />
+                  <img className="w-[79px]" src={"/assets/" + boost.imageUrl + ".png" || cat8} alt="" />
                   <button
                     disabled={!isBoostAvailable}
                     className={clsx(
