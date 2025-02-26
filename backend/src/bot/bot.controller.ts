@@ -27,8 +27,8 @@ export class BotController {
       });
     }
 
-    const referrerId = ctx.from.id;
-    const referredId = Number((ctx as any)['startPayload']);
+    const referrerId = Number((ctx as any)['startPayload']);
+    const referredId = ctx.from.id;
 
     const referrer = await this.prisma.user.findUnique({
           where: {
