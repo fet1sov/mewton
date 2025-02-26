@@ -15,6 +15,8 @@ export class BotController {
     const language = ctx.message.from.language_code;
     const webAppUrl = `https://mewtonfarm.com/?startapp=${payload}`;
 
+    console.log((ctx as any)['startPayload']);
+
     const count = await this.prisma.user.count({
       where: { telegramId: ctx.from.id }
     });
