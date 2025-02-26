@@ -27,44 +27,6 @@ export class BotController {
       });
     }
 
-    const user = await this.prisma.user.findUnique({
-      where: {
-        telegramId: ctx.from.id,
-      },
-    });
-
-    console.log(ctx.text.split(' ')[-1]);
-
-    if (!user) {
-      const res = await this.prisma.user.create({
-        data: {
-          telegramId: ctx.from.id,
-          username: ctx.from.username || '',
-          firstName: ctx.from.first_name || '',
-          lastName: ctx.from.last_name || '',
-          points: 0,
-          energy: 1000,
-          energyReFillList: 0,
-          balance: 0,
-        },
-      });
-
-      console.log(payload);
-
-      const referred = await this.prisma.user.findUnique({
-        where: {
-          telegramId: Number(payload),
-        },
-      });
-
-      await this.prisma.referral.create({
-        data: {
-          referrerId: res.id,
-          referredId: referred.id
-        },
-      });
-    }
-
     if (language === 'en') {
       await ctx.replyWithPhoto(
         'https://ciudikqidyqvkwwsxhiv.supabase.co/storage/v1/object/sign/test/welcome.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0ZXN0L3dlbGNvbWUuanBnIiwiaWF0IjoxNzMyMzY3MjQ2LCJleHAiOjE3NjM5MDMyNDZ9.wOlkJaWr88o392AubjvdeFKqhydravLQICzDpccGCwk&t=2024-11-23T13%3A07%3A24.613Z',
