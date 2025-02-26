@@ -25,46 +25,48 @@ export class BotController {
         where: { telegramId: ctx.from.id },
         data: { tgChatId: String(ctx.chat.id) },
       });
-    }
 
-    const referrerId = Number((ctx as any)['startPayload']);
-    const referredId = ctx.from.id;
+      
+    } else {
+      const referrerId = Number((ctx as any)['startPayload']);
+      const referredId = ctx.from.id;
 
-    const referrer = await this.prisma.user.findUnique({
-          where: {
-            telegramId: referrerId,
-          },
-        });
-    
-        const referred = await this.prisma.user.findUnique({
-          where: {
-            telegramId: referredId,
-          },
-        });
-    
-        const referredIds = await this.prisma.referral.findMany({
-          where: {
-            referredId: referred.id,
-          },
-        });
-    
-        if (referredIds.length == 0 && referrerId != referredId) {
-          const res = await this.prisma.referral.create({
-            data: {
-              referrerId: referrer.id,
+      const referrer = await this.prisma.user.findUnique({
+            where: {
+              telegramId: referrerId,
+            },
+          });
+      
+          const referred = await this.prisma.user.findUnique({
+            where: {
+              telegramId: referredId,
+            },
+          });
+      
+          const referredIds = await this.prisma.referral.findMany({
+            where: {
               referredId: referred.id,
             },
           });
       
-          await this.prisma.user.update({
-            where: {
-              telegramId: referrerId,
-            },
-            data: {
-              balance: referrer.balance + 0.001,
-            },
-          });
-        }
+          if (referredIds.length == 0 && referrerId != referredId) {
+            const res = await this.prisma.referral.create({
+              data: {
+                referrerId: referrer.id,
+                referredId: referred.id,
+              },
+            });
+        
+            await this.prisma.user.update({
+              where: {
+                telegramId: referrerId,
+              },
+              data: {
+                balance: referrer.balance + 0.001,
+              },
+            });
+          }
+    }
 
     if (language === 'en') {
       await ctx.replyWithPhoto(
