@@ -28,57 +28,61 @@ export class BotController {
 
       
     } else {
-      await this.prisma.user.create({
-        data: {
-          telegramId: ctx.from.id,
-          username: ctx.from.username || '',
-          firstName: ctx.from.first_name || '',
-          lastName: ctx.from.last_name || '',
-          points: 0,
-          energy: 1000,
-          energyReFillList: 0,
-          balance: 0,
-        },
-      });
+      const startPayload = (ctx as any)['startPayload'];
+      if (startPayload.length)
+      {
+        await this.prisma.user.create({
+          data: {
+            telegramId: ctx.from.id,
+            username: ctx.from.username || '',
+            firstName: ctx.from.first_name || '',
+            lastName: ctx.from.last_name || '',
+            points: 0,
+            energy: 1000,
+            energyReFillList: 0,
+            balance: 0,
+          },
+        });
 
-      const referrerId = Number((ctx as any)['startPayload']);
-      const referredId = ctx.from.id;
+        const referrerId = Number((ctx as any)['startPayload']);
+        const referredId = ctx.from.id;
 
-      const referrer = await this.prisma.user.findUnique({
+        const referrer = await this.prisma.user.findUnique({
+          where: {
+            telegramId: referrerId,
+          },
+        });
+
+        const referred = await this.prisma.user.findUnique({
+          where: {
+            telegramId: referredId,
+          },
+        });
+
+        const referredIds = await this.prisma.referral.findMany({
+          where: {
+            referredId: referred.id,
+          },
+        });
+
+        if (referredIds.length == 0 && referrerId != referredId) {
+          await this.prisma.referral.create({
+            data: {
+              referrerId: referrer.id,
+              referredId: referred.id
+            },
+          });
+
+          await this.prisma.user.update({
             where: {
               telegramId: referrerId,
             },
-          });
-      
-          const referred = await this.prisma.user.findUnique({
-            where: {
-              telegramId: referredId,
+            data: {
+              balance: referrer.balance + 0.001,
             },
           });
-      
-          const referredIds = await this.prisma.referral.findMany({
-            where: {
-              referredId: referred.id,
-            },
-          });
-      
-          if (referredIds.length == 0 && referrerId != referredId) {
-            const res = await this.prisma.referral.create({
-              data: {
-                referrerId: referrer.id,
-                referredId: referred.id,
-              },
-            });
-        
-            await this.prisma.user.update({
-              where: {
-                telegramId: referrerId,
-              },
-              data: {
-                balance: referrer.balance + 0.001,
-              },
-            });
-          }
+        }
+      }
     }
 
     if (language === 'en') {
