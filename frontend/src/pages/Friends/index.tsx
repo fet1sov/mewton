@@ -16,13 +16,13 @@ export function Friends() {
   const [referrals, setReferrals] = useState<Referral[]>([] as Referral[]);
   const telegramId = useUserStore((state) => state.telegramId);
   const syncUserData = useUserStore((state) => state.syncUserData);
-  const INVITE_URL = 'https://t.me/mewtonBot/mewton';
+  const INVITE_URL = 'https://t.me/mewtonBot';
   const { tgw } = useTelegram();
   const { t } = useTranslation();
 
   const handleInviteFriend = () => {
-    const inviteLink = `${INVITE_URL}?startapp=${telegramId}`;
-    const shareText = `Join me on this awesome Telegram mini app!`;
+    const inviteLink = `${INVITE_URL}?start=${telegramId}`;
+    const shareText = `Join the MewTon app!`;
     const fullUrl = `https://t.me/share/url?url=${encodeURIComponent(
       inviteLink,
     )}&text=${encodeURIComponent(shareText)}`;
