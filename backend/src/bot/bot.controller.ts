@@ -15,8 +15,6 @@ export class BotController {
     const language = ctx.message.from.language_code;
     const webAppUrl = `https://mewtonfarm.com/?startapp=${payload}`;
 
-    console.log((ctx as any)['startPayload']);
-
     const count = await this.prisma.user.count({
       where: { telegramId: ctx.from.id }
     });
@@ -28,6 +26,45 @@ export class BotController {
         data: { tgChatId: String(ctx.chat.id) },
       });
     }
+
+    const referrerId = ctx.from.id;
+    const referredId = Number((ctx as any)['startPayload']);
+
+    const referrer = await this.prisma.user.findUnique({
+          where: {
+            telegramId: referrerId,
+          },
+        });
+    
+        const referred = await this.prisma.user.findUnique({
+          where: {
+            telegramId: referredId,
+          },
+        });
+    
+        const referredIds = await this.prisma.referral.findMany({
+          where: {
+            referredId: referred.id,
+          },
+        });
+    
+        if (referredIds.length == 0 && referrerId != referredId) {
+          const res = await this.prisma.referral.create({
+            data: {
+              referrerId: referrer.id,
+              referredId: referred.id,
+            },
+          });
+      
+          await this.prisma.user.update({
+            where: {
+              telegramId: referrerId,
+            },
+            data: {
+              balance: referrer.balance + 0.001,
+            },
+          });
+        }
 
     if (language === 'en') {
       await ctx.replyWithPhoto(
