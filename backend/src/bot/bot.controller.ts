@@ -28,6 +28,19 @@ export class BotController {
 
       
     } else {
+      await this.prisma.user.create({
+        data: {
+          telegramId: ctx.from.id,
+          username: ctx.from.username || '',
+          firstName: ctx.from.first_name || '',
+          lastName: ctx.from.last_name || '',
+          points: 0,
+          energy: 1000,
+          energyReFillList: 0,
+          balance: 0,
+        },
+      });
+
       const referrerId = Number((ctx as any)['startPayload']);
       const referredId = ctx.from.id;
 
