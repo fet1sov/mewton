@@ -132,7 +132,7 @@ export class UserService {
     try {
       await this.prisma.user.updateMany({
         data: {
-          energyReFillList: { increment: 1 },
+          energy: 1000
         },
       });
 
