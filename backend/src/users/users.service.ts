@@ -8,8 +8,8 @@ import { Context, Telegraf } from 'telegraf';
 @Injectable()
 export class UserService {
   constructor(
-    private prisma: PrismaService, 
-    @InjectBot() private readonly bot: Telegraf<Context>,) {}
+    private prisma: PrismaService,
+    @InjectBot() private readonly bot: Telegraf<Context>,) { }
 
   async getAllUsers(isAdmin: boolean) {
     try {
@@ -161,29 +161,33 @@ export class UserService {
             balance: { increment: user.totalEarned },
           },
         });
+      }
 
-        await this.prisma.userboost.update({
+      await this.prisma.userBoost.updateMany({
+        data: {
+          purchasedAt: new Date('2023-11-12'),
+        },
+      });
+
+      const usertoBoosts = await this.prisma.userBoost.findMany();
+      for (let user of usertoBoosts) {
+        const sendUser = await this.prisma.user.findUnique({
           where: {
-            usedId: user.id
-          },
-          data: {
-            purchasedAt: new Date('2023-11-12'),
-          },
+            id: user.id
+          }
         });
 
-        if (language === 'ru')
-        {
+        if (language === 'ru') {
           this.bot.telegram.sendMessage(
-            user.tgChatId,
+            sendUser.tgChatId,
             `😺 Ваш буст принес прибыль, загляните в приложение`,
           );
         } else if (language === 'en') {
           this.bot.telegram.sendMessage(
-            user.tgChatId,
+            sendUser.tgChatId,
             `😺 Your boost has brought profit, take a look at the app`,
           );
         }
-        
       }
 
       return 0;
