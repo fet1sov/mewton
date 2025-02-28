@@ -4,7 +4,6 @@ import { Boost } from '@prisma/client';
 import { InjectBot } from 'nestjs-telegraf';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Context, Telegraf } from 'telegraf';
-import BoostInfo from './dto/boosts.dto';
 
 @Injectable()
 export class BoostsService {

@@ -1,11 +1,15 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import { InjectBot } from 'nestjs-telegraf';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Context, Telegraf } from 'telegraf';
 
 @Injectable()
 export class UserService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService, 
+    @InjectBot() private readonly bot: Telegraf<Context>,) {}
 
   async getAllUsers(isAdmin: boolean) {
     try {
@@ -144,6 +148,8 @@ export class UserService {
 
   @Cron(CronExpression.EVERY_12_HOURS)
   async paySalary() {
+    const language = this.bot.context.from?.language_code || 'en';
+
     const users = await this.prisma.user.findMany();
     try {
       for (let user of users) {
@@ -155,6 +161,29 @@ export class UserService {
             balance: { increment: user.totalEarned },
           },
         });
+
+        await this.prisma.userboost.update({
+          where: {
+            usedId: user.id
+          },
+          data: {
+            purchasedAt: new Date('2023-11-12'),
+          },
+        });
+
+        if (language === 'ru')
+        {
+          this.bot.telegram.sendMessage(
+            user.tgChatId,
+            `😺 Ваш буст принес прибыль, загляните в приложение`,
+          );
+        } else if (language === 'en') {
+          this.bot.telegram.sendMessage(
+            user.tgChatId,
+            `😺 Your boost has brought profit, take a look at the app`,
+          );
+        }
+        
       }
 
       return 0;
