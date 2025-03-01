@@ -23,50 +23,6 @@ export class BoostsService {
       throw new Error('Boost not found');
     }
 
-    /*
-    if (boost.name === 'Loki') {
-      if (user.points < boost.buyPrice) {
-        throw new Error('Insufficient points');
-      }
-
-      await this.prisma.user.update({
-        where: { id: userId },
-        data: {
-          catsBought: { increment: 1 },
-          points: { decrement: boost.buyPrice },
-          boosts: {
-            update: {
-              where: { id },
-              data: { purchasedAt: new Date(), isPurchased: true, isPayed: false },
-            },
-          },
-        },
-      });
-
-      await this.prisma.user.update({
-        where: { id: userId },
-        data: {
-          balance: { increment: boost.boostPrice },
-        },
-      });
-
-      const boosts = await this.prisma.user.findUnique({
-        where: { id: userId },
-        select: {
-          boosts: {
-            select: {
-              id: true,
-              purchasedAt: true,
-              boost: true,
-            },
-          },
-        },
-      });
-
-      return boosts;
-    }
-    */
-
     if (user.balance < boost.buyPrice) {
       throw new Error('Insufficient balance');
     }
@@ -170,12 +126,12 @@ export class BoostsService {
 
   @Cron(CronExpression.EVERY_30_SECONDS)
   async payUserBoosts() {
-    const dayAgo = new Date(Date.now() - 60 * 60 * 1000 * 24);
+    const twelveHAgo = new Date(Date.now() - 60 * 60 * 1000 * 12);
     const language = this.bot.context.from?.language_code || 'en';
 
     const boosts = await this.prisma.userBoost.findMany({
       where: {
-        purchasedAt: { lte: new Date(dayAgo) },
+        purchasedAt: { lte: new Date(twelveHAgo) },
         isPurchased: true,
         isPayed: false,
       },
@@ -217,12 +173,12 @@ export class BoostsService {
             if (language === 'en')
               this.bot.telegram.sendMessage(
                 boost.user.tgChatId,
-                `Boost Available ${boost.boost.name}`,
+                `😺 Ваш буст принес прибыль, загляните в приложение`,
               );
             if (language === 'ru')
               this.bot.telegram.sendMessage(
                 boost.user.tgChatId,
-                'Доступно буст ' + boost.boost.name,
+                '😺 Your boost has brought profit, take a look at the app',
               );
           }),
         );
