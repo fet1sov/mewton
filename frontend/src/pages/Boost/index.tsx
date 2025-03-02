@@ -46,7 +46,7 @@ export default function Boost() {
             {boosts.map((item) => {
               const { boost, purchasedAt } = item;
               const isBoostAvailable =
-                (dayjs().diff(dayjs(purchasedAt), 'day') && boost.isAvailable) 
+                (dayjs().diff(dayjs(purchasedAt), 'hour') >= 12 && boost.isAvailable) 
                 /* || boost.name === 'Loki' */;
 
               if (!item.boost.isAvailable) {
